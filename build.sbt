@@ -14,6 +14,7 @@ lazy val root = (project in file(".")) dependsOn macros
 lazy val macros = project settings (
   scalacOptions ++= Seq("-language:experimental.macros"),
   libraryDependencies ++= Seq(
+    "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.1",
     scalaOrganization.value % "scala-reflect" % scalaVersion.value,
     scalaOrganization.value % "scala-compiler" % scalaVersion.value,
     "org.typelevel" %% "macro-compat" % "1.1.1",
