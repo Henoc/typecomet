@@ -10,6 +10,8 @@ Provide the type of an expression.
 ```
 
 ```scala
+import typecomet.typeof
+
 object Main extends App {
     type a = typeof.`java.time.LocalDateTime.MAX`.T
     val b: a = java.time.LocalDateTime.now()
