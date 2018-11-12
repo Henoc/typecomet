@@ -21,6 +21,25 @@ object Main extends App {
 }
 ```
 
+### @signature
+
+Generate function signatures from class or function definitions.
+
+```scala
+import typecomet.signature
+
+@signature
+class Foo {
+  def bar(a: Int, b: Boolean): String = s"a: $a, b: $b"
+}
+
+object Main extends App {
+  type firstArgType = Foo#bar#a
+  type returnType = Foo#bar#$return
+  // ...
+}
+```
+
 ## Install
 
 TODO

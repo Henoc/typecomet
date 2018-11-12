@@ -4,7 +4,7 @@ import scala.reflect.macros.whitebox
 import scala.util.Try
 
 /**
-  * Package that defines typecomet functions. Implementation hint is provided by shapeless and typescript.
+  * Package that defines typecomet functions. Idea is provided by shapeless and typescript.
   *
   * @see [[https://github.com/milessabin/shapeless/blob/shapeless-2.3.3/core/src/main/scala/shapeless/singletons.scala literal type implementation in shapeless]]
   * @see [[https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-8.html typescript(conditional types)]]
@@ -123,7 +123,7 @@ package object typecomet {
   }
 
   /**
-    * Provide the conditional type (not lazy).
+    * Provide the <b>pseudo</b> conditional type (not lazy).
     * {{{
     *   <typecond type-expr> := typecond.`<typecond dsl>`.T
     *   <typecond dsl> := <left type-expr> <op> <right type-expr> '? <then type-expr> ': <else type-expr>
@@ -133,7 +133,7 @@ package object typecomet {
     *   type b = typecond.`a '=:= String '? Int ': Boolean`.T
     *   val c: b = 100
     * }}}
-    * Because of type statement is type alias (= not lazy), you cannot define type function.
+    * Because of type statement is type alias (= not lazy), you cannot define type functions.
     * {{{
     *   // This doesn't work as expected.
     *   type fn[S] = typecond.`S '=:= String '? Int ': Boolean`.T
@@ -144,7 +144,20 @@ package object typecomet {
   }
 
   /**
-    * Generate function signatures.
+    * Generate function signatures from class or function definitions.
+    * {{{
+    *   @signature
+    *   class Foo {
+    *     def bar(a: Int, b: Boolean): String = {...}
+    *   }
+    *
+    *   @signature
+    *   def baz(...): ... = {...}
+    *
+    *   // enable to access types of the signature
+    *   type firstArgTypeOfBar = Foo#bar#a
+    *   type returnTypeOfBar = Foo#bar#$return
+    * }}}
     */
   @compileTimeOnly("signature annotation should have been removed by typecomet but was not")
   class signature extends StaticAnnotation {
