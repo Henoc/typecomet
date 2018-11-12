@@ -1,10 +1,16 @@
 package typecomet
 
 import java.time.LocalDateTime
+import java.util.regex.Pattern
+import scala.reflect.runtime.universe._
+
+@signature
+class Sample {
+  def foo(bar: Int): String = bar.toString
+}
 
 object Main extends App {
-  type a = String
-  type b = typecond.`a '=:= String '? Int ': Boolean`.T
-  val c: b = 100
-  println(c)
+  type fooArg1 = Sample#foo#bar
+  val a: fooArg1 = 100
+  println(a)
 }

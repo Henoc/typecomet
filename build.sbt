@@ -9,15 +9,21 @@ ThisBuild / libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.0.5" % "test"
 )
 
-lazy val root = (project in file(".")) dependsOn macros
+lazy val root = (project in file(".")) dependsOn macros settings (
+  scalacOptions ++= Seq(
+    // "-Xprint:typer"
+  ),
+  addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
+)
 
 lazy val macros = project settings (
-  scalacOptions ++= Seq("-language:experimental.macros"),
+  scalacOptions ++= Seq(
+    "-language:experimental.macros"
+  ),
   libraryDependencies ++= Seq(
     "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.1",
     scalaOrganization.value % "scala-reflect" % scalaVersion.value,
-    scalaOrganization.value % "scala-compiler" % scalaVersion.value,
-    "org.typelevel" %% "macro-compat" % "1.1.1",
-    compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.patch)
-  )
+    scalaOrganization.value % "scala-compiler" % scalaVersion.value
+  ),
+  addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
 )
